@@ -25,7 +25,7 @@ output "load_balancer_name" {
 output "load_balancer_backend_address_pool_id" {
   description = "The ID of the Load Balancer Backend Address Pool"
   value       = azurerm_lb_backend_address_pool.this.id
- 
+
 }
 
 output "load_balancer_frontend_ip_configuration" {
