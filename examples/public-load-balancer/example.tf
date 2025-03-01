@@ -7,12 +7,12 @@ provider "azurerm" {
 }
 
 module "resource_group-example" {
-  source  = "cdornele/resource-group/azure"
-  version = "1.0.0"
-  stack     = "example"
-  suffixes  = ["t", "01"]
-  location  = "eastus2"
-  tags      = {
+  source   = "cdornele/resource-group/azure"
+  version  = "1.0.0"
+  stack    = "example"
+  suffixes = ["t", "01"]
+  location = "eastus2"
+  tags = {
     "environement" = "example"
     "workload"     = "example"
     "owner"        = "example"
@@ -23,74 +23,74 @@ module "network-example" {
   source  = "cdornele/network-spoke/azure"
   version = "2.0.1"
   global_settings = {
-    name = "example"
+    name     = "example"
     suffixes = ["t", "01"]
   }
   settings = {
-     address_space       = ["192.168.0.0/24"]
-     subnet_settings     = {
-        subnets = {
-          frontend = {
-            name = "app"
-            suffixes = ["t", "01"]
-            address_prefixes = ["192.168.0.0/28"]
-            nsg_key = "application-nsg"
-            rts_key = "application-rts"
-         }
-       }
+    address_space = ["192.168.0.0/24"]
+    subnet_settings = {
+      subnets = {
+        frontend = {
+          name             = "app"
+          suffixes         = ["t", "01"]
+          address_prefixes = ["192.168.0.0/28"]
+          nsg_key          = "application-nsg"
+          rts_key          = "application-rts"
+        }
+      }
     }
     network_security_group_settings = {
-      empty_nsg={}
-      application-nsg={
-            name = "app"
-            suffixes = ["t", "01"]
-            rules    = [
-              {
-                name                       = "allow-http-inbound",
-                priority                   = "100"
-                direction                  = "Inbound"
-                access                     = "Allow"
-                protocol                   = "Tcp"
-                source_port_range          = "*"
-                destination_port_range     = "80"
-                source_address_prefix      = "*"
-                destination_address_prefix = "*"
-                description                = "Allow inbound HTTP traffic example"
-              }
-            ]
+      empty_nsg = {}
+      application-nsg = {
+        name     = "app"
+        suffixes = ["t", "01"]
+        rules = [
+          {
+            name                       = "allow-http-inbound",
+            priority                   = "100"
+            direction                  = "Inbound"
+            access                     = "Allow"
+            protocol                   = "Tcp"
+            source_port_range          = "*"
+            destination_port_range     = "80"
+            source_address_prefix      = "*"
+            destination_address_prefix = "*"
+            description                = "Allow inbound HTTP traffic example"
+          }
+        ]
       }
     }
     route_tables_settings = {
-      application-rts={
+      application-rts = {
         is_Enabled = false
-        name     ="app"
-        suffixes = ["prod", "01"]
+        name       = "app"
+        suffixes   = ["prod", "01"]
       }
     }
   }
   resource_group = module.resource_group-example.name
-  location = module.resource_group-example.location
-  tags = module.resource_group-example.tags
+  location       = module.resource_group-example.location
+  tags           = module.resource_group-example.tags
 }
 
 module "load-balancer-example" {
-  source  = "../.."
+  source              = "../.."
   resource_group_name = module.resource_group-example.name
-  location = module.resource_group-example.location
-  lb_type = "public"
-  public_ip_stack = "example"
-  lb_stack = "example"
-  suffixes = ["t", "01"]
-  public_ip_tags = module.resource_group-example.tags
-  lb_tags = module.resource_group-example.tags
+  location            = module.resource_group-example.location
+  lb_type             = "public"
+  public_ip_stack     = "example"
+  lb_stack            = "example"
+  suffixes            = ["t", "01"]
+  public_ip_tags      = module.resource_group-example.tags
+  lb_tags             = module.resource_group-example.tags
   lb_nat_remote_port = {
-    ssh = ["Tcp", "22"]
+    ssh = ["Tcp", "22", "20000", "20020"]
   }
   lb_probe = {
-    http  = ["Tcp", "80", ""]
+    http = ["Tcp", "80", ""]
   }
   lb_port = {
-    http  = ["80", "Tcp", "80"]
+    http = ["80", "Tcp", "80"]
   }
 }
 

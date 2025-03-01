@@ -30,7 +30,7 @@ data "azurecaf_name" "load_balancer_backend_address_pool" {
   use_slug      = true
   clean_input   = true
   separator     = "-"
-  
+
 }
 
 # end

@@ -28,7 +28,7 @@ variable "suffixes" {
 variable "public_ip_stack" {
   description = "The stack name to use for the public IP."
   type        = string
-  
+
 }
 
 variable "public_ip_allocation_method" {
@@ -43,7 +43,7 @@ variable "public_ip_sku" {
   default     = "Standard"
 }
 
-variable "public_ip_ddos_protection_mode" { 
+variable "public_ip_ddos_protection_mode" {
   description = "The DDoS protection mode of the Public IP."
   type        = string
   default     = "Disabled"
@@ -94,7 +94,7 @@ variable "public_ip_sku_tier" {
 variable "public_ip_zones" {
   description = "The availability zones of the Public IP."
   type        = list(string)
-  default     = ["1","2","3"]
+  default     = ["1", "2", "3"]
 }
 
 variable "public_ip_tags" {

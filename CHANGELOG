@@ -3,3 +3,8 @@
 ## [2.0.0]
 
 - Second version of module;
+
+## [2.0.1]
+
+- Enhancement in the documentation;
+- Fixed NAT rules;
